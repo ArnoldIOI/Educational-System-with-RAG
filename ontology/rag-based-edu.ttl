@@ -1,0 +1,169 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix p-plan: <http://purl.org/net/p-plan#> .
+@prefix rag: <http://example.org/rag-vocab#> .
+
+<http://example.org/rag-based-edu-ontology> rdf:type owl:Ontology ;
+    rdfs:label "RAG Based Education Ontology" .
+
+### RAG System Plan
+rag:RAGPlan rdf:type p-plan:Plan ;
+    rdfs:label "RAG System Plan" ;
+    rdfs:comment "The plan that describes the workflow of the RAG system." .
+
+### Indexing Part
+rag:Indexing rdf:type prov:Activity, p-plan:MultiStep ;
+    rdfs:label "Indexing" ;
+    rdfs:comment "The multi-step activity of indexing lecture content." ;
+    p-plan:isStepOf rag:RAGPlan .
+
+rag:TranscribeVideo rdf:type prov:Activity, p-plan:Step ;
+    rdfs:label "Transcribe Video" ;
+    rdfs:comment "The activity of transcribing the video." ;
+    p-plan:isStepOf rag:Indexing ;
+    prov:used rag:TranscriptionModel ;
+    prov:used rag:Video .
+
+rag:EmbedTranscription rdf:type prov:Activity, p-plan:Step ;
+    rdfs:label "Embed Transcription" ;
+    rdfs:comment "The activity of embedding the transcription." ;
+    p-plan:isStepOf rag:Indexing ;
+    p-plan:isPrecededBy rag:TranscribeVideo ;
+    prov:used rag:EmbeddingModel ;
+    prov:used rag:Transcription .
+
+rag:ChunkTranscription rdf:type prov:Activity, p-plan:Step ;
+    rdfs:label "Chunk Transcription" ;
+    rdfs:comment "The activity of chunking the transcription." ;
+    p-plan:isStepOf rag:Indexing ;
+    p-plan:isPrecededBy rag:EmbedTranscription ;
+    prov:used rag:ChunkingStrategy .
+
+### Retrieval Part
+rag:Retrieve rdf:type prov:Activity, p-plan:MultiStep ;
+    rdfs:label "Retrieve" ;
+    rdfs:comment "The multi-step activity of retrieving documents based on a prompt." ;
+    p-plan:isStepOf rag:RAGPlan ;
+    p-plan:isPrecededBy rag:Indexing .
+
+rag:EmbedUserQuery rdf:type prov:Activity, p-plan:Step ;
+    rdfs:label "Embed User Query" ;
+    rdfs:comment "The activity of embedding a user prompt." ;
+    p-plan:isStepOf rag:Retrieve ;
+    prov:used rag:UserQuery, rag:StudentContextInformation ;
+    prov:used rag:EmbeddingModel ;
+    prov:generated rag:UserQueryEmbedding .
+
+rag:SimilaritySearch rdf:type prov:Activity, p-plan:Step ;
+    rdfs:label "Similarity Search" ;
+    rdfs:comment "The activity of performing a similarity search based on a prompt embedding." ;
+    p-plan:isStepOf rag:Retrieve ;
+    p-plan:isPrecededBy rag:EmbedUserQuery ;
+    prov:used rag:UserQueryEmbedding ;
+    prov:used rag:VectorDatabase ;
+    prov:generated rag:RetrievedDocuments .
+
+### Generation Part
+rag:Generation rdf:type prov:Activity, p-plan:MultiStep ;
+    rdfs:label "Generation" ;
+    rdfs:comment "The multi-step activity of generating a response based on retrieved documents and a prompt template." ;
+    p-plan:isStepOf rag:RAGPlan ;
+    p-plan:isPrecededBy rag:Retrieve .
+
+rag:buildGenerationPrompt rdf:type prov:Activity, p-plan:Step ;
+    rdfs:label "Build Generation Prompt" ;
+    rdfs:comment "The activity of building a prompt based on the retrieved documents and the prompt template." ;
+    p-plan:isStepOf rag:Generation ;
+    p-plan:isPrecededBy rag:SimilaritySearch ;
+    prov:used rag:PromptTemplate, rag:RetrievedDocuments ;
+    prov:generated rag:GenerationPrompt .
+
+rag:GenerateResponse rdf:type prov:Activity, p-plan:Step ;
+    rdfs:label "Generate Response" ;
+    rdfs:comment "The activity of generating a response based on the prompt and language model." ;
+    p-plan:isStepOf rag:Generation ;
+    p-plan:isPrecededBy rag:buildGenerationPrompt ;
+    prov:used rag:GenerationPrompt ;
+    prov:used rag:LanguageModel ;
+    prov:generated rag:GeneratedResponse .
+
+### RAG System Entities
+rag:Lecture rdf:type prov:Entity ;
+    rdfs:label "Lecture" ;
+    rdfs:comment "The lecture that serves as the source of the video." .
+
+rag:Video rdf:type prov:Entity ;
+    rdfs:label "Video" ;
+    rdfs:comment "The video recorded from the lecture." ;
+    prov:wasDerivedFrom rag:Lecture .
+
+rag:TranscriptionModel rdf:type prov:Entity ;
+    rdfs:label "Transcription Model" ;
+    rdfs:comment "The model used for transcribing the video." .
+
+rag:Transcription rdf:type prov:Entity ;
+    rdfs:label "Transcription" ;
+    rdfs:comment "The transcription of the video." ;
+    prov:wasGeneratedBy rag:TranscriptionModel ;
+    prov:wasDerivedFrom rag:Video .
+
+rag:EmbeddingModel rdf:type prov:Entity ;
+    rdfs:label "Embedding Model" ;
+    rdfs:comment "The model used for generating embeddings." .
+
+rag:ChunkingStrategy rdf:type prov:Entity ;
+    rdfs:label "Chunking Strategy" ;
+    rdfs:comment "The strategy used for chunking transcriptions." .
+
+rag:VectorDatabase rdf:type prov:Entity ;
+    rdfs:label "Vector Database" ;
+    rdfs:comment "The database storing embeddings and related metadata." ;
+    prov:wasDerivedFrom rag:EmbeddingModel, rag:Transcription, rag:ChunkingStrategy .
+
+
+rag:StudentContextInformation rdf:type prov:Entity ;
+    rdfs:label "Student Context Information" ;
+    rdfs:comment "The context information provided by the student, including the task description and code solution." .
+
+rag:UserQuery rdf:type prov:Entity ;
+    rdfs:label "User Query" ;
+    rdfs:comment "The initial query provided by the user." .
+
+rag:UserQueryEmbedding rdf:type prov:Entity, rag:Embedding ;
+    rdfs:label "Prompt Embedding" ;
+    rdfs:comment "The embedded representation of the user query." ;
+    prov:wasGeneratedBy rag:EmbedUserQuery ;
+    prov:wasDerivedFrom rag:UserQuery .
+
+rag:RetrievedDocuments rdf:type prov:Entity, rag:Document ;
+    rdfs:label "Retrieved Documents" ;
+    rdfs:comment "The documents retrieved based on the user query." ;
+    prov:wasGeneratedBy rag:SimilaritySearch ;
+    prov:wasDerivedFrom rag:UserQueryEmbedding .
+
+rag:PromptTemplate rdf:type prov:Entity ;
+    rdfs:label "Prompt Template" ;
+    rdfs:comment "The template used for generating a response." .
+
+rag:GenerationPrompt rdf:type prov:Entity ;
+    rdfs:label "Generation Prompt" ;
+    rdfs:comment "The prompt created for generating the final response." ;
+    prov:wasGeneratedBy rag:buildGenerationPrompt ;
+    prov:wasDerivedFrom rag:RetrievedDocuments, rag:PromptTemplate .
+
+rag:LanguageModel rdf:type prov:Entity ;
+    rdfs:label "Language Model" ;
+    rdfs:comment "The large language model used for generating responses." .
+
+rag:GeneratedResponse rdf:type prov:Entity ;
+    rdfs:label "Generated Response" ;
+    rdfs:comment "The final response generated by the RAG system." ;
+    prov:wasGeneratedBy rag:GenerateResponse ;
+    prov:wasDerivedFrom rag:GenerationPrompt, rag:LanguageModel .
+
+rag:Feedback rdf:type prov:Entity ;
+    rdfs:label "Feedback" ;
+    rdfs:comment "The feedback generated for the student." ;
+    prov:wasGeneratedBy rag:GenerateResponse ;
+    prov:wasDerivedFrom rag:StudentContextInformation .
