@@ -5,7 +5,8 @@
 @prefix rag: <http://example.org/rag-vocab#> .
 
 <http://example.org/rag-based-edu-ontology> rdf:type owl:Ontology ;
-    rdfs:label "RAG Based Education Ontology" .
+    rdfs:label "RAG Based Education Ontology" ;
+    rdfs:comment "An ontology for describing the workflow of the RAG system in an educational context, built based on [Leveraging Lecture Content for Improved Feedback: Explorations with GPT-4 and Retrieval Augmented Generation](https://arxiv.org/abs/2405.06681)" .
 
 ### RAG System Plan
 rag:RAGPlan rdf:type p-plan:Plan ;

@@ -6,7 +6,7 @@
 
 <http://example.org/rag-ontology> rdf:type owl:Ontology ;
     rdfs:label "RAG System Ontology" ;
-    rdfs:comment "Ontology for the Retrieval-Augmented Generation (RAG) system." .
+    rdfs:comment "Ontology for the Retrieval-Augmented Generation (RAG) system, built based on [Chatbots in Academia: A Retrieval-Augmented Generation Approach for Improved Efficient Information Access](https://ieeexplore.ieee.org/document/10499652)" .
 
 ### RAG System Plan
 rag:RAGPlan rdf:type p-plan:Plan ;
