@@ -5,8 +5,8 @@ The Educational Retrieval-Augmented Generation Ontology (ERAGO) is a knowledge r
 ## Directory Structure
 - `vocab/`: Contains the vocabulary files.
 - `ontology/`: Contains the detailed ontology files.
-- `examples/`: Contains example files demonstrating how to use the ontology.
-- `docs/`: Contains documentation and specification files.
+- `examples/`: Contains example files demonstrating how to use the ontology.(TODO)
+- `docs/`: Contains documentation and specification files.(TODO)
 - `resources/`: Contains useful resources for building this ontology.
 
 ## Getting Started
