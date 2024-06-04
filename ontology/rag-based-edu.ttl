@@ -2,12 +2,53 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix p-plan: <http://purl.org/net/p-plan#> .
-@prefix rag: <http://example.org/rag-vocab#> .
+@prefix rag: <http://example.org/rag-based-edu-ontology#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 
 <http://example.org/rag-based-edu-ontology> rdf:type owl:Ontology ;
     rdfs:label "RAG Based Education Ontology" ;
     rdfs:comment "An ontology for describing the workflow of the RAG system in an educational context, built based on [Leveraging Lecture Content for Improved Feedback: Explorations with GPT-4 and Retrieval Augmented Generation](https://arxiv.org/abs/2405.06681)" .
+
+### Classes
+rag:RAGSystem rdf:type rdfs:Class ;
+    rdfs:label "RAG" .
+
+rag:Text rdf:type rdfs:Class, prov:Entity ;
+    rdfs:label "Text" ;
+    rdfs:comment "A piece of text." .
+
+rag:EmbeddingModel rdf:type rdfs:Class, prov:Entity ;
+    rdfs:label "Embedding Model" ;
+    rdfs:comment "A model used to generate embeddings from text." .
+
+rag:SearchMethod rdf:type rdfs:Class, prov:Entity ;
+    rdfs:label "Search Method" ;
+    rdfs:comment "The search method used to retrieve documents from the vector database based on the query" .
+
+rag:LanguageModel rdf:type rdfs:Class, prov:Entity ;
+    rdfs:label "Language Model" ;
+    rdfs:comment "A model used to generate responses from retrieved documents." .
+
+rag:Embedding rdf:type rdfs:Class, prov:Entity ;
+    rdfs:label "Embedding" ;
+    rdfs:comment "A vector representation of a piece of text." .
+
+rag:KnowledgeBase rdf:type rdfs:Class, prov:Entity ;
+    rdfs:label "Knowledge Base" ;
+    rdfs:comment "A database of vector representations of documents." .
+
+### Subclasses
+rag:UserQuery rdfs:subClassOf rag:Text ;
+    rdfs:label "User Query" ;
+    rdfs:comment "The query entered by the user." .
+
+rag:Document rdfs:subClassOf rag:Text ;
+    rdfs:label "Document" ;
+    rdfs:comment "A document in the vector database." .
+
+rag:PromptTemplate rdfs:subClassOf rag:Text ;
+    rdfs:label "Prompt Template" ;
+    rdfs:comment "A predefined template for generating responses." .
 
 ### RAG System Plan
 rag:RAGPlan rdf:type p-plan:Plan ;
@@ -73,6 +114,7 @@ rag:SimilaritySearch rdf:type prov:Activity, p-plan:Step ;
     p-plan:isPrecededBy rag:EmbedUserQuery ;
     prov:used rag:UserQueryEmbedding ;
     prov:used rag:VectorDatabase ;
+    prov:used rag:SearchMethod ;
     prov:generated rag:RetrievedDocuments ;
     p-plan:hasInputVar rag:UserQueryEmbedding ;
     p-plan:hasOutputVar rag:RetrievedDocuments .
@@ -143,10 +185,6 @@ rag:StudentContextInformation rdf:type prov:Entity ;
     rdfs:label "Student Context Information" ;
     rdfs:comment "The context information provided by the student, including the task description and code solution." .
 
-rag:UserQuery rdf:type prov:Entity ;
-    rdfs:label "User Query" ;
-    rdfs:comment "The initial query provided by the user." .
-
 rag:UserQueryEmbedding rdf:type prov:Entity, rag:Embedding ;
     rdfs:label "Prompt Embedding" ;
     rdfs:comment "The embedded representation of the user query." ;
@@ -159,19 +197,11 @@ rag:RetrievedDocuments rdf:type prov:Entity, rag:Document ;
     prov:wasGeneratedBy rag:SimilaritySearch ;
     prov:wasDerivedFrom rag:UserQueryEmbedding .
 
-rag:PromptTemplate rdf:type prov:Entity ;
-    rdfs:label "Prompt Template" ;
-    rdfs:comment "The template used for generating a response." .
-
 rag:GenerationPrompt rdf:type prov:Entity ;
     rdfs:label "Generation Prompt" ;
     rdfs:comment "The prompt created for generating the final response." ;
     prov:wasGeneratedBy rag:buildGenerationPrompt ;
     prov:wasDerivedFrom rag:RetrievedDocuments, rag:PromptTemplate .
-
-rag:LanguageModel rdf:type prov:Entity ;
-    rdfs:label "Language Model" ;
-    rdfs:comment "The large language model used for generating responses." .
 
 rag:GeneratedResponse rdf:type prov:Entity ;
     rdfs:label "Generated Response" ;
