@@ -3,6 +3,7 @@
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix p-plan: <http://purl.org/net/p-plan#> .
 @prefix rag: <http://example.org/rag-vocab#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
 
 <http://example.org/rag-based-edu-ontology> rdf:type owl:Ontology ;
     rdfs:label "RAG Based Education Ontology" ;
