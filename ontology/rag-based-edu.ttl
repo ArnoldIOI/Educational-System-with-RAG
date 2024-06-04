@@ -24,7 +24,9 @@ rag:TranscribeVideo rdf:type prov:Activity, p-plan:Step ;
     rdfs:comment "The activity of transcribing the video." ;
     p-plan:isStepOf rag:Indexing ;
     prov:used rag:TranscriptionModel ;
-    prov:used rag:Video .
+    prov:used rag:Video ;
+    p-plan:hasInputVar rag:Video ;
+    p-plan:hasOutputVar rag:Transcription .
 
 rag:EmbedTranscription rdf:type prov:Activity, p-plan:Step ;
     rdfs:label "Embed Transcription" ;
@@ -32,14 +34,18 @@ rag:EmbedTranscription rdf:type prov:Activity, p-plan:Step ;
     p-plan:isStepOf rag:Indexing ;
     p-plan:isPrecededBy rag:TranscribeVideo ;
     prov:used rag:EmbeddingModel ;
-    prov:used rag:Transcription .
+    prov:used rag:Transcription ;
+    p-plan:hasInputVar rag:Transcription ;
+    p-plan:hasOutputVar rag:TranscriptionEmbedding .
 
 rag:ChunkTranscription rdf:type prov:Activity, p-plan:Step ;
     rdfs:label "Chunk Transcription" ;
     rdfs:comment "The activity of chunking the transcription." ;
     p-plan:isStepOf rag:Indexing ;
     p-plan:isPrecededBy rag:EmbedTranscription ;
-    prov:used rag:ChunkingStrategy .
+    prov:used rag:ChunkingStrategy ;
+    p-plan:hasInputVar rag:TranscriptionEmbedding ;
+    p-plan:hasOutputVar rag:ChunkedTranscription .
 
 ### Retrieval Part
 rag:Retrieve rdf:type prov:Activity, p-plan:MultiStep ;
@@ -54,7 +60,10 @@ rag:EmbedUserQuery rdf:type prov:Activity, p-plan:Step ;
     p-plan:isStepOf rag:Retrieve ;
     prov:used rag:UserQuery, rag:StudentContextInformation ;
     prov:used rag:EmbeddingModel ;
-    prov:generated rag:UserQueryEmbedding .
+    prov:generated rag:UserQueryEmbedding ;
+    p-plan:hasInputVar rag:UserQuery ;
+    p-plan:hasInputVar rag:StudentContextInformation ;
+    p-plan:hasOutputVar rag:UserQueryEmbedding .
 
 rag:SimilaritySearch rdf:type prov:Activity, p-plan:Step ;
     rdfs:label "Similarity Search" ;
@@ -63,7 +72,9 @@ rag:SimilaritySearch rdf:type prov:Activity, p-plan:Step ;
     p-plan:isPrecededBy rag:EmbedUserQuery ;
     prov:used rag:UserQueryEmbedding ;
     prov:used rag:VectorDatabase ;
-    prov:generated rag:RetrievedDocuments .
+    prov:generated rag:RetrievedDocuments ;
+    p-plan:hasInputVar rag:UserQueryEmbedding ;
+    p-plan:hasOutputVar rag:RetrievedDocuments .
 
 ### Generation Part
 rag:Generation rdf:type prov:Activity, p-plan:MultiStep ;
@@ -78,7 +89,10 @@ rag:buildGenerationPrompt rdf:type prov:Activity, p-plan:Step ;
     p-plan:isStepOf rag:Generation ;
     p-plan:isPrecededBy rag:SimilaritySearch ;
     prov:used rag:PromptTemplate, rag:RetrievedDocuments ;
-    prov:generated rag:GenerationPrompt .
+    prov:generated rag:GenerationPrompt ;
+    p-plan:hasInputVar rag:RetrievedDocuments ;
+    p-plan:hasInputVar rag:PromptTemplate ;
+    p-plan:hasOutputVar rag:GenerationPrompt .
 
 rag:GenerateResponse rdf:type prov:Activity, p-plan:Step ;
     rdfs:label "Generate Response" ;
@@ -87,7 +101,9 @@ rag:GenerateResponse rdf:type prov:Activity, p-plan:Step ;
     p-plan:isPrecededBy rag:buildGenerationPrompt ;
     prov:used rag:GenerationPrompt ;
     prov:used rag:LanguageModel ;
-    prov:generated rag:GeneratedResponse .
+    prov:generated rag:GeneratedResponse ;
+    p-plan:hasInputVar rag:GenerationPrompt ;
+    p-plan:hasOutputVar rag:GeneratedResponse .
 
 ### RAG System Entities
 rag:Lecture rdf:type prov:Entity ;
@@ -121,7 +137,6 @@ rag:VectorDatabase rdf:type prov:Entity ;
     rdfs:label "Vector Database" ;
     rdfs:comment "The database storing embeddings and related metadata." ;
     prov:wasDerivedFrom rag:EmbeddingModel, rag:Transcription, rag:ChunkingStrategy .
-
 
 rag:StudentContextInformation rdf:type prov:Entity ;
     rdfs:label "Student Context Information" ;
