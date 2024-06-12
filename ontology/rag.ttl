@@ -1,0 +1,123 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix p-plan: <http://purl.org/net/p-plan#> .
+@prefix rag: <http://example.org/rag-based-edu-ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+rag:Student a owl:Class ;
+    rdfs:label "Student" ;
+    rdfs:comment "A student." .
+
+rag:id a owl:DatatypeProperty ;
+    rdfs:label "ID" ;
+    rdfs:comment "An identifier." ;
+    rdfs:domain rag:Student, rag:ChatSession, rag:StudentSolution ;
+    rdfs:range xsd:string .
+
+rag:StudentSolution a owl:Class ;
+    rdfs:label "Student Solution" ;
+    rdfs:comment "A solution provided by a student." .
+
+rag:StudentSolutionContent a owl:DatatypeProperty ;
+    rdfs:label "Student Solution Text" ;
+    rdfs:comment "The text of a student solution." ;
+    rdfs:domain rag:StudentSolution ;
+    rdfs:range xsd:string .
+
+rag:BasedOnChatSession a owl:ObjectProperty ;
+    rdfs:label "Based On Chat Session" ;
+    rdfs:comment "The chat session on which the student solution is based." ;
+    rdfs:domain rag:StudentSolution ;
+    rdfs:range rag:ChatSession .
+
+## A chat session has multiple rounds of interaction.
+rag:ChatSession a owl:Class, p-plan:Plan ;
+    rdfs:label "RAG Chat Session" ;
+    rdfs:comment "A chat session between a user and the RAG." .
+
+rag:ChatSessionStartedByStudent a owl:ObjectProperty ;
+    rdfs:label "Chat Session Started By Student" ;
+    rdfs:comment "The student who started the chat session." ;
+    rdfs:domain rag:ChatSession ;
+    rdfs:range rag:Student .
+
+rag:Round a owl:Class, p-plan:MultiStep ;
+    rdfs:label "Round" ;
+    rdfs:comment "A round of interaction between the user and the RAG." .
+
+## A round of interaction between the user and the RAG.
+### Activities involved in a round of interaction.
+rag:Retrieval a owl:Class, p-plan:Step ;
+    rdfs:label "Retrieve" ;
+    rdfs:comment "Retrieve information from the knowledge base." .
+
+
+rag:Generation a owl:Class, p-plan:Step ;
+    rdfs:label "Generation" ;
+    rdfs:comment "Generate a response based on the retrieved information." .
+
+### Entities involved in a round of interaction.
+rag:Retriever a owl:Class;
+    rdfs:label "RAG Retriever" .
+
+rag:RetrieverModelVersion a owl:DatatypeProperty;
+    rdfs:label "Retriever Model Version" ;
+    rdfs:comment "The version of the retriever model." ;
+    rdfs:domain rag:Retriever ;
+    rdfs:range xsd:string .
+
+rag:KnowledgeBase a owl:Class;
+    rdfs:label "RAG Knowledge Base" ;
+    rdfs:comment "A knowledge base used by the RAG." .
+
+rag:KnowledgeBaseVersion a owl:DatatypeProperty;
+    rdfs:label "Knowledge Base Version" ;
+    rdfs:comment "The version of the knowledge base." ;
+    rdfs:domain rag:KnowledgeBase ;
+    rdfs:range xsd:string .
+
+rag:Generator a owl:Class;
+    rdfs:label "RAG Generator" .
+
+rag:GeneratorModelVersion a owl:DatatypeProperty;
+    rdfs:label "Generator Model Version" ;
+    rdfs:comment "The version of the generator model." ;
+    rdfs:domain rag:Generator ;
+    rdfs:range xsd:string .
+
+rag:Query a owl:Class;
+    rdfs:label "RAG Query" ;
+    rdfs:comment "A query made by a user to the RAG." .
+
+rag:QueryContent a owl:DatatypeProperty;
+    rdfs:label "Query Text" ;
+    rdfs:comment "The text of a query." ;
+    rdfs:domain rag:Query ;
+    rdfs:range xsd:string .
+
+rag:Prompt a owl:Class;
+    rdfs:label "Prompt" .
+
+rag:PromptContent a owl:DatatypeProperty;
+    rdfs:label "Prompt Text" ;
+    rdfs:comment "The text of a prompt." ;
+    rdfs:domain rag:Prompt ;
+    rdfs:range xsd:string .
+
+rag:RetrievedInformation a owl:Class;
+    rdfs:label "Retrieved Information" .
+
+rag:RetrievedContent a owl:DatatypeProperty;
+    rdfs:label "Retrieved Text" ;
+    rdfs:comment "The text of retrieved information." ;
+    rdfs:domain rag:RetrievedInformation ;
+    rdfs:range xsd:string .
+
+rag:Response a owl:Class;
+    rdfs:label "Response" .
+
+rag:ResponseContent a owl:DatatypeProperty;
+    rdfs:label "Response Text" ;
+    rdfs:comment "The text of a response." ;
+    rdfs:domain rag:Response ;
+    rdfs:range xsd:string .
