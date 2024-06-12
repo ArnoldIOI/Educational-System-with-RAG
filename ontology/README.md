@@ -1,5 +1,6 @@
 # Competency Questions
 ## 1 How does the prompts of the student evolve?
+```turtle
 PREFIX rag: <http://example.org/rag-based-edu-ontology#>
 PREFIX p-plan: <http://purl.org/net/p-plan#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
@@ -18,8 +19,10 @@ WHERE {
   ?prompt a rag:Prompt .
   ?solution rag:id "1718191203" .
 }
+```
 
 ## 2 Are two students’ prompts similar?
+```turtle
 PREFIX rag: <http://example.org/rag-based-edu-ontology#>
 PREFIX p-plan: <http://purl.org/net/p-plan#>
 
@@ -37,8 +40,10 @@ WHERE {
          rag:queryContent ?queryContent .
 }
 ORDER BY ?student ?query
+```
 
 ## 3 Does the student cite the System’s response properly?
+```turtle
 PREFIX rag: <http://example.org/rag-based-edu-ontology#>
 PREFIX p-plan: <http://purl.org/net/p-plan#>
 
@@ -60,8 +65,10 @@ WHERE {
             rag:responseContent ?responseContent .
 }
 ORDER BY ?student ?solution ?response
+```
 
 ## 4 Does the student use the response properly?
+```turtle
 PREFIX rag: <http://example.org/rag-based-edu-ontology#>
 PREFIX p-plan: <http://purl.org/net/p-plan#>
 
@@ -86,9 +93,10 @@ WHERE {
             rag:responseContent ?responseContent .
 }
 ORDER BY ?student ?query
-
+```
 
 ## 5 Is the information retrieved correct and related to the query?
+```turtle
 PREFIX rag: <http://example.org/rag-based-edu-ontology#>
 PREFIX p-plan: <http://purl.org/net/p-plan#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
@@ -103,3 +111,4 @@ WHERE {
   ?retrievedInfo a rag:RetrievedInformation .
   ?query a rag:Query .
 }
+```
