@@ -17,6 +17,7 @@ Explanations of Learning Recommendations | [Paper](https://arxiv.org/abs/2403.03
 - Automated Feedback for Student Math Responses Based on Multi-Modality and Fine-Tuning | [Paper](https://dl.acm.org/doi/10.1145/3636555.3636860)
 - Paraphrasing evades detectors of AI-generated text, but retrieval is an effective defense | [Paper](https://arxiv.org/abs/2303.13408) | [Code](https://github.com/martiansideofthemoon/ai-detection-paraphrases)
 - MathVC: An LLM-Simulated Multi-Character Virtual Classroom for Mathematics Education | [Paper](https://arxiv.org/abs/2404.06711)
+- Assigning AI: Seven Approaches for Students, with Prompts | [Paper](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4475995)
 
 ### Review Papers
 - Large Language Models for Education: A Survey and Outlook | [Paper](https://arxiv.org/abs/2403.18105)
