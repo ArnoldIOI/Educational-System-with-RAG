@@ -10,7 +10,7 @@
 - EduChat: A Large-Scale Language Model-based Chatbot System for Intelligent Education | [Paper](https://arxiv.org/abs/2308.02773) | [Code](https://github.com/ECNU-ICALK/EduChat)
 - LLM-as-a-Coauthor: Can Mixed Human-Written and Machine-Generated Text Be Detected? | [Paper](https://arxiv.org/abs/2401.05952) | [Code](https://github.com/Dongping-Chen/MixSet)
 - Knowledge Graphs as Context Sources for LLM-Based
-Explanations of Learning Recommendations | [Paper]
+Explanations of Learning Recommendations | [Paper](https://arxiv.org/abs/2403.03008)
 - Human-AI Collaborative Essay Scoring: A Dual-Process Framework with LLMs | [Paper](https://arxiv.org/abs/2401.06431)
 - Educational data augmentation in physics education research using ChatGPT | [Paper](https://journals.aps.org/prper/abstract/10.1103/PhysRevPhysEducRes.19.020150)
 - Rating Short L2 Essays on the CEFR Scale with GPT-4 | [Paper](https://aclanthology.org/2023.bea-1.49/)
