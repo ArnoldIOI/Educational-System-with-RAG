@@ -1,0 +1,454 @@
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix edu: <http://example.org/edu/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix p-plan: <http://vocab.linkeddata.es/p-plan#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# ===== Classes =====
+edu:Query a rdfs:Class ;
+    rdfs:subClassOf prov:Entity .
+
+edu:Response a rdfs:Class ;
+    rdfs:subClassOf prov:Entity .
+
+edu:ModelCard a rdfs:Class ;
+    rdfs:subClassOf prov:Entity .
+
+# ===== Agents =====
+edu:educator a prov:Agent, prov:Person .
+edu:learner a prov:Agent, prov:Person .
+edu:llmSystem a prov:Agent, prov:SoftwareAgent .
+edu:llmModel a prov:Agent, prov:SoftwareAgent ;
+    prov:actedOnBehalfOf edu:llmSystem .
+edu:memoryComponent a prov:Agent, prov:SoftwareAgent ;
+    prov:actedOnBehalfOf edu:llmSystem .
+edu:ragComponent a prov:Agent, prov:SoftwareAgent ;
+    prov:actedOnBehalfOf edu:llmSystem .
+edu:functionCallComponent a prov:Agent, prov:SoftwareAgent ;
+    prov:actedOnBehalfOf edu:llmSystem .
+edu:responseIntegrationComponent a prov:Agent, prov:SoftwareAgent ;
+    prov:actedOnBehalfOf edu:llmSystem .
+
+# ===== Entities =====
+edu:educationalMaterial a prov:Entity .
+edu:generatedQuestions a prov:Entity .
+edu:learnerSolution a prov:Entity .
+edu:correctedAnswer a prov:Entity .
+edu:clarification a prov:Entity .
+edu:gradingResults a prov:Entity .
+
+edu:querySet a prov:Entity, prov:Collection .
+edu:conversationHistory a prov:Entity, prov:Collection .
+edu:knowledgeBase a prov:Entity, prov:Collection .
+
+edu:llmModelCard a edu:ModelCard .
+edu:contextSnapshot a prov:Entity .
+edu:retrievedInformation a prov:Entity .
+edu:modelOutput a prov:Entity .
+edu:functionCallResult a prov:Entity .
+edu:combinedQuery a prov:Entity .
+edu:integratedOutput a prov:Entity .
+edu:finalResponse a prov:Entity .
+edu:updatedConversationHistory a prov:Entity .
+
+edu:retrievalAlgorithm a prov:Entity ;
+    prov:value "BM25" .
+edu:queryTemplate a prov:Entity .
+edu:functionSpecification a prov:Entity .
+edu:selectedFunction a prov:Entity .
+
+# ===== Activities =====
+edu:materialCreation a prov:Activity ;
+    prov:startedAtTime "2023-07-01T09:00:00"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-01T10:00:00"^^xsd:dateTime .
+
+edu:questionGeneration a prov:Activity ;
+    prov:startedAtTime "2023-07-01T10:30:00"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-01T11:30:00"^^xsd:dateTime .
+
+edu:questionSolving a prov:Activity ;
+    prov:startedAtTime "2023-07-02T14:00:00"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T15:00:00"^^xsd:dateTime .
+
+edu:errorCorrection a prov:Activity ;
+    prov:startedAtTime "2023-07-02T15:15:00"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T15:30:00"^^xsd:dateTime .
+
+edu:confusionHelper a prov:Activity ;
+    prov:startedAtTime "2023-07-02T15:45:00"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T16:00:00"^^xsd:dateTime .
+
+edu:automaticGrading a prov:Activity ;
+    prov:startedAtTime "2023-07-03T09:00:00"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-03T10:00:00"^^xsd:dateTime .
+
+edu:askQuestion a prov:Activity .
+edu:provideResponse a prov:Activity .
+
+edu:modelInference a prov:Activity ;
+    prov:startedAtTime "2023-07-02T14:05:34"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T14:05:35"^^xsd:dateTime .
+
+edu:updateMemory a prov:Activity ;
+    prov:startedAtTime "2023-07-02T14:05:35"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T14:05:36"^^xsd:dateTime .
+
+edu:retrieveContext a prov:Activity ;
+    prov:startedAtTime "2023-07-02T14:05:36"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T14:05:37"^^xsd:dateTime .
+
+edu:retrieveInformation a prov:Activity ;
+    prov:startedAtTime "2023-07-02T14:05:37"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T14:05:38"^^xsd:dateTime .
+
+edu:combineQueryAndContext a prov:Activity ;
+    prov:startedAtTime "2023-07-02T14:05:39"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T14:05:40"^^xsd:dateTime .
+
+edu:selectFunction a prov:Activity ;
+    prov:startedAtTime "2023-07-02T14:05:41"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T14:05:41.5"^^xsd:dateTime .
+
+edu:executeFunction a prov:Activity ;
+    prov:startedAtTime "2023-07-02T14:05:41.5"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T14:05:42"^^xsd:dateTime .
+
+edu:combineOutputs a prov:Activity ;
+    prov:startedAtTime "2023-07-02T14:05:43"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T14:05:43.5"^^xsd:dateTime .
+
+edu:formatResponse a prov:Activity ;
+    prov:startedAtTime "2023-07-02T14:05:43.5"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T14:05:44"^^xsd:dateTime .
+
+edu:updateConversationHistory a prov:Activity ;
+    prov:startedAtTime "2023-07-02T14:05:44"^^xsd:dateTime ;
+    prov:endedAtTime "2023-07-02T14:05:44.5"^^xsd:dateTime .
+
+# ===== Roles =====
+edu:contentCreator a prov:Role .
+edu:assessmentDesigner a prov:Role .
+edu:evaluator a prov:Role .
+edu:aiAssistant a prov:Role .
+edu:learner a prov:Role .
+edu:tutor a prov:Role .
+edu:questioner a prov:Role .
+edu:responder a prov:Role .
+edu:modelCardRole a prov:Role .
+edu:inferenceEngine a prov:Role .
+edu:memoryManager a prov:Role .
+edu:contextProvider a prov:Role .
+edu:informationRetriever a prov:Role .
+edu:queryCombiner a prov:Role .
+edu:functionSelector a prov:Role .
+edu:functionExecutor a prov:Role .
+edu:outputIntegrator a prov:Role .
+edu:responseFormatter a prov:Role .
+edu:historyUpdater a prov:Role .
+
+# ===== Relationships =====
+edu:educationalMaterial prov:wasGeneratedBy edu:materialCreation ;
+    prov:wasAttributedTo edu:educator, edu:llmSystem .
+
+edu:generatedQuestions prov:wasGeneratedBy edu:questionGeneration ;
+    prov:wasDerivedFrom edu:educationalMaterial ;
+    prov:wasAttributedTo edu:educator, edu:llmSystem .
+
+edu:learnerSolution prov:wasGeneratedBy edu:questionSolving ;
+    prov:wasAttributedTo edu:learner ;
+    prov:wasDerivedFrom edu:querySet .
+
+edu:correctedAnswer prov:wasGeneratedBy edu:errorCorrection ;
+    prov:wasDerivedFrom edu:learnerSolution ;
+    prov:wasRevisionOf edu:learnerSolution ;
+    prov:wasAttributedTo edu:llmSystem .
+
+edu:clarification prov:wasGeneratedBy edu:confusionHelper ;
+    prov:wasDerivedFrom edu:correctedAnswer ;
+    prov:wasAttributedTo edu:llmSystem .
+
+edu:gradingResults prov:wasGeneratedBy edu:automaticGrading ;
+    prov:wasDerivedFrom edu:learnerSolution, edu:correctedAnswer, edu:clarification ;
+    prov:wasAttributedTo edu:llmSystem .
+
+edu:materialCreation prov:wasAssociatedWith edu:educator, edu:llmSystem ;
+    prov:used edu:educationalMaterial .
+
+edu:questionGeneration prov:wasAssociatedWith edu:educator, edu:llmSystem ;
+    prov:used edu:educationalMaterial .
+
+edu:questionSolving prov:wasAssociatedWith edu:learner, edu:llmSystem ;
+    prov:used edu:generatedQuestions, edu:llmSystem .
+
+edu:errorCorrection prov:wasAssociatedWith edu:learner, edu:llmSystem ;
+    prov:used edu:learnerSolution .
+
+edu:confusionHelper prov:wasAssociatedWith edu:learner, edu:llmSystem ;
+    prov:used edu:correctedAnswer .
+
+edu:automaticGrading prov:wasAssociatedWith edu:educator, edu:llmSystem ;
+    prov:used edu:learnerSolution, edu:correctedAnswer, edu:clarification .
+
+edu:modelOutput prov:wasGeneratedBy edu:modelInference ;
+    prov:generatedAtTime "2023-07-02T14:05:35"^^xsd:dateTime .
+
+edu:modelInference prov:wasAssociatedWith edu:llmModel ;
+    prov:used edu:combinedQuery, edu:contextSnapshot .
+
+edu:conversationHistory prov:wasGeneratedBy edu:updateMemory ;
+    prov:wasAttributedTo edu:memoryComponent .
+
+edu:updateMemory prov:used edu:query1, edu:modelOutput ;
+    prov:wasAssociatedWith edu:memoryComponent .
+
+edu:retrieveContext prov:used edu:conversationHistory ;
+    prov:wasAssociatedWith edu:memoryComponent .
+
+edu:contextSnapshot prov:wasGeneratedBy edu:retrieveContext ;
+    prov:wasDerivedFrom edu:conversationHistory ;
+    prov:generatedAtTime "2023-07-02T14:05:37"^^xsd:dateTime .
+
+edu:retrievedInformation prov:wasGeneratedBy edu:retrieveInformation ;
+    prov:wasDerivedFrom edu:knowledgeBase ;
+    prov:generatedAtTime "2023-07-02T14:05:38"^^xsd:dateTime .
+
+edu:combinedQuery prov:wasGeneratedBy edu:combineQueryAndContext ;
+    prov:wasDerivedFrom edu:query1, edu:retrievedInformation ;
+    prov:generatedAtTime "2023-07-02T14:05:40"^^xsd:dateTime .
+
+edu:retrieveInformation prov:used edu:query1, edu:knowledgeBase, edu:retrievalAlgorithm ;
+    prov:wasAssociatedWith edu:ragComponent .
+
+edu:combineQueryAndContext prov:used edu:query1, edu:retrievedInformation, edu:queryTemplate ;
+    prov:wasAssociatedWith edu:ragComponent .
+
+edu:functionCallResult prov:wasGeneratedBy edu:executeFunction ;
+    prov:wasAttributedTo edu:functionCallComponent ;
+    prov:generatedAtTime "2023-07-02T14:05:42"^^xsd:dateTime .
+
+edu:selectFunction prov:used edu:combinedQuery ;
+    prov:wasAssociatedWith edu:functionCallComponent .
+
+edu:executeFunction prov:used edu:combinedQuery, edu:selectedFunction ;
+    prov:wasAssociatedWith edu:functionCallComponent .
+
+edu:selectedFunction prov:wasGeneratedBy edu:selectFunction ;
+    prov:wasDerivedFrom edu:functionSpecification .
+
+edu:integratedOutput prov:wasGeneratedBy edu:combineOutputs ;
+    prov:wasDerivedFrom edu:modelOutput, edu:functionCallResult ;
+    prov:generatedAtTime "2023-07-02T14:05:43.5"^^xsd:dateTime .
+
+edu:finalResponse prov:wasGeneratedBy edu:formatResponse ;
+    prov:wasDerivedFrom edu:integratedOutput ;
+    prov:generatedAtTime "2023-07-02T14:05:44"^^xsd:dateTime .
+
+edu:updatedConversationHistory prov:wasGeneratedBy edu:updateConversationHistory ;
+    prov:wasDerivedFrom edu:conversationHistory, edu:query1, edu:finalResponse ;
+    prov:generatedAtTime "2023-07-02T14:05:44.5"^^xsd:dateTime .
+
+edu:combineOutputs prov:used edu:modelOutput, edu:functionCallResult ;
+    prov:wasAssociatedWith edu:responseIntegrationComponent .
+
+edu:formatResponse prov:used edu:integratedOutput ;
+    prov:wasAssociatedWith edu:responseIntegrationComponent .
+
+edu:updateConversationHistory prov:used edu:conversationHistory, edu:query1, edu:finalResponse ;
+    prov:wasAssociatedWith edu:memoryComponent .
+
+# ===== Qualified Associations =====
+edu:materialCreation prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:educator ;
+    prov:hadRole edu:contentCreator
+], [
+    a prov:Association ;
+    prov:agent edu:llmSystem ;
+    prov:hadRole edu:aiAssistant
+] .
+
+edu:questionGeneration prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:educator ;
+    prov:hadRole edu:assessmentDesigner
+], [
+    a prov:Association ;
+    prov:agent edu:llmSystem ;
+    prov:hadRole edu:aiAssistant
+] .
+
+edu:questionSolving prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:learner ;
+    prov:hadRole edu:learner
+], [
+    a prov:Association ;
+    prov:agent edu:llmSystem ;
+    prov:hadRole edu:tutor
+] .
+
+edu:errorCorrection prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:learner ;
+    prov:hadRole edu:learner
+], [
+    a prov:Association ;
+    prov:agent edu:llmSystem ;
+    prov:hadRole edu:tutor
+] .
+
+edu:confusionHelper prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:learner ;
+    prov:hadRole edu:learner
+], [
+    a prov:Association ;
+    prov:agent edu:llmSystem ;
+    prov:hadRole edu:tutor
+] .
+
+edu:automaticGrading prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:educator ;
+    prov:hadRole edu:evaluator
+], [
+    a prov:Association ;
+    prov:agent edu:llmSystem ;
+    prov:hadRole edu:aiAssistant
+] .
+
+edu:modelInference prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:llmModel ;
+    prov:hadRole edu:inferenceEngine
+] .
+
+edu:updateMemory prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:memoryComponent ;
+    prov:hadRole edu:memoryManager
+] .
+
+edu:retrieveContext prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:memoryComponent ;
+    prov:hadRole edu:contextProvider
+] .
+
+edu:retrieveInformation prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:ragComponent ;
+    prov:hadRole edu:informationRetriever
+] .
+
+edu:combineQueryAndContext prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:ragComponent ;
+    prov:hadRole edu:queryCombiner
+] .
+
+edu:selectFunction prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:functionCallComponent ;
+    prov:hadRole edu:functionSelector
+] .
+
+edu:executeFunction prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:functionCallComponent ;
+    prov:hadRole edu:functionExecutor
+] .
+
+edu:combineOutputs prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:responseIntegrationComponent ;
+    prov:hadRole edu:outputIntegrator
+] .
+
+edu:formatResponse prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:responseIntegrationComponent ;
+    prov:hadRole edu:responseFormatter
+] .
+
+edu:updateConversationHistory prov:qualifiedAssociation [
+    a prov:Association ;
+    prov:agent edu:memoryComponent ;
+    prov:hadRole edu:historyUpdater
+] .
+
+# ===== Workflow Plan =====
+edu:llmSystemPlan a prov:Plan, p-plan:Plan ;
+    rdfs:label "LLM System Workflow Plan" .
+
+edu:modelInferenceStep a p-plan:Step ;
+    rdfs:label "Model Inference Step" ;
+    p-plan:isStepOfPlan edu:llmSystemPlan .
+
+edu:memoryRetrievalStep a p-plan:Step ;
+    rdfs:label "Memory Retrieval Step" ;
+    p-plan:isStepOfPlan edu:llmSystemPlan .
+
+edu:ragStep a p-plan:Step ;
+    rdfs:label "Retrieval-Augmented Generation Step" ;
+    p-plan:isStepOfPlan edu:llmSystemPlan .
+
+edu:functionCallStep a p-plan:Step ;
+    rdfs:label "Function Call Step" ;
+    p-plan:isStepOfPlan edu:llmSystemPlan .
+
+edu:responseIntegrationStep a p-plan:Step ;
+    rdfs:label "Response Integration Step" ;
+    p-plan:isStepOfPlan edu:llmSystemPlan .
+
+edu:memoryRetrievalStep p-plan:isPrecededBy edu:ragStep .
+edu:ragStep p-plan:isPrecededBy edu:modelInferenceStep .
+edu:modelInferenceStep p-plan:isPrecededBy edu:functionCallStep .
+edu:functionCallStep p-plan:isPrecededBy edu:responseIntegrationStep .
+
+edu:userQuery a p-plan:Variable ;
+    rdfs:label "User Query" ;
+    p-plan:isInputVarOf edu:memoryRetrievalStep, edu:ragStep .
+
+edu:contextSnapshot a p-plan:Variable ;
+    rdfs:label "Context Snapshot" ;
+    p-plan:isOutputVarOf edu:memoryRetrievalStep ;
+    p-plan:isInputVarOf edu:modelInferenceStep .
+
+edu:retrievedInformation a p-plan:Variable ;
+    rdfs:label "Retrieved Information" ;
+    p-plan:isOutputVarOf edu:ragStep ;
+    p-plan:isInputVarOf edu:modelInferenceStep .
+
+edu:modelOutput a p-plan:Variable ;
+    rdfs:label "Model Output" ;
+    p-plan:isOutputVarOf edu:modelInferenceStep ;
+    p-plan:isInputVarOf edu:functionCallStep .
+
+edu:functionCallResult a p-plan:Variable ;
+    rdfs:label "Function Call Result" ;
+    p-plan:isOutputVarOf edu:functionCallStep ;
+    p-plan:isInputVarOf edu:responseIntegrationStep .
+
+edu:finalResponse a p-plan:Variable ;
+    rdfs:label "Final Response" ;
+    p-plan:isOutputVarOf edu:responseIntegrationStep .
+
+# ===== P-Plan =====
+edu:modelInference p-plan:correspondsToStep edu:modelInferenceStep .
+edu:retrieveContext p-plan:correspondsToStep edu:memoryRetrievalStep .
+edu:retrieveInformation p-plan:correspondsToStep edu:ragStep .
+edu:executeFunction p-plan:correspondsToStep edu:functionCallStep .
+edu:combineOutputs p-plan:correspondsToStep edu:responseIntegrationStep .
+
+# ===== Example Instances =====
+edu:query1 a edu:Query ;
+    prov:value "How do I start solving this problem?" .
+
+edu:response1 a edu:Response ;
+    prov:value "To start solving this problem, let's break it down into steps..." .
+
+edu:querySet1 a prov:Entity, prov:Collection ;
+    prov:wasAttributedTo edu:learner ;
+    prov:wasGeneratedBy edu:questionSolving ;
+    prov:hadMember edu:query1 .
